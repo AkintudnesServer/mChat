@@ -54,7 +54,8 @@ public class mChatAPI {
         String hungerBar = basicBar(player.getFoodLevel(), 20, 10);
         String level = String.valueOf(player.getLevel());
         String exp = String.valueOf(player.getExperience());
-        String expBar = basicBar(player.getExperience(), ((player.getLevel() + 1) * 10), 10);
+        String expBar = basicBar(player.getExperience(),
+                ((player.getLevel() + 1) * 10), 10);
         String tExp = String.valueOf(player.getTotalExperience());
         String gMode = player.getGameMode().name();
 
@@ -76,7 +77,6 @@ public class mChatAPI {
             mCType = mChannel.API.getChannelType(mCName);
         }
 
-
         String format = parseVars(formatAll, player);
         String[] search;
         String[] replace;
@@ -92,61 +92,20 @@ public class mChatAPI {
         if (!checkPermissions(player, "mchat.coloredchat"))
             msg = addColour(msg).replaceAll("(§([a-z0-9]))", "");
 
-        search = new String[]{
-                "+displayname,+dname,+dn",
-                "+experiencebar,+expb,+ebar,+eb",
-                "+experience,+exp",
-                "+gamemode,+gm",
-                "+group,+g",
-                "+hungerbar,+hub",
-                "+hunger",
-                "+healthbar,+hb",
-                "+health,+h",
-                "+location,+loc",
-                "+level,+l",
-                "+message,+msg,+m",
-                "+name,+n",
-                "+prefix,+p",
-                "+suffix,+s",
-                "+totalexp,+texp,+te",
-                "+time,+t",
-                "+world,+w",
-                "+Cname,+Cn",
-                "+Cprefix,+Cp",
-                "+Csuffix,+Cs",
-                "+Ctype,+Ct",
-                "+Groupname,+Gname,+G",
-                "+Worldname,+Wname,+W"
-                };
+        search = new String[] { "+displayname,+dname,+dn",
+                "+experiencebar,+expb,+ebar,+eb", "+experience,+exp",
+                "+gamemode,+gm", "+group,+g", "+hungerbar,+hub", "+hunger",
+                "+healthbar,+hb", "+health,+h", "+location,+loc", "+level,+l",
+                "+message,+msg,+m", "+name,+n", "+prefix,+p", "+suffix,+s",
+                "+totalexp,+texp,+te", "+time,+t", "+world,+w", "+Cname,+Cn",
+                "+Cprefix,+Cp", "+Csuffix,+Cs", "+Ctype,+Ct",
+                "+Groupname,+Gname,+G", "+Worldname,+Wname,+W" };
 
-        replace = new String[]{
-                player.getDisplayName(),
-                expBar,
-                exp,
-                gMode,
-                group,
-                hungerBar,
-                hungerLevel,
-                healthbar,
-                health,
-                loc,
-                level,
-                msg,
-                player.getName(),
-                prefix,
-                suffix,
-                tExp,
-                time,
-                world,
-                mCName,
-                mCPref,
-                mCSuf,
-                mCType,
-                getGroupName(group),
-                getWorldName(world),
-                };
-
-
+        replace = new String[] { player.getDisplayName(), expBar, exp, gMode,
+                group, hungerBar, hungerLevel, healthbar, health, loc, level,
+                msg, player.getName(), prefix, suffix, tExp, time, world,
+                mCName, mCPref, mCSuf, mCType, getGroupName(group),
+                getWorldName(world), };
 
         return replaceVars(format, search, replace);
     }
@@ -164,17 +123,17 @@ public class mChatAPI {
     }
 
     public String getGroupName(String group) {
-       if (plugin.mIListener.groupNodeList.get(group) != null)
-           return plugin.mIListener.groupNodeList.get(group).toString();
+        if (plugin.mIListener.groupNodeList.get(group) != null)
+            return plugin.mIListener.groupNodeList.get(group).toString();
 
-       return group;
+        return group;
     }
 
     public String getWorldName(String world) {
-       if (plugin.mIListener.worldNodeList.get(world) != null)
-           return plugin.mIListener.worldNodeList.get(world).toString();
+        if (plugin.mIListener.worldNodeList.get(world) != null)
+            return plugin.mIListener.worldNodeList.get(world).toString();
 
-       return world;
+        return world;
     }
 
     /*
@@ -239,7 +198,8 @@ public class mChatAPI {
         if (plugin.mIConfig.getNode("mchat." + info) == null)
             return "";
 
-        plugin.otherMap.putAll(plugin.mIConfig.getNode("mchat." + info).getAll());
+        plugin.otherMap.putAll(plugin.mIConfig.getNode("mchat." + info)
+                .getAll());
         for (Entry<String, Object> entry : plugin.otherMap.entrySet()) {
             if (player.hasPermission("mchat." + info + "." + entry.getKey())) {
                 plugin.infoResolve = entry.getValue().toString();
@@ -254,18 +214,18 @@ public class mChatAPI {
         return "";
     }
 
-
     /*
      * PermissionsBukkit Stuff
      */
-     String getSuperPermsInfo(Player player, String info) {
+    String getSuperPermsInfo(Player player, String info) {
         if (info.equals("group"))
             return getSuperPermsGroup(player);
 
         if (plugin.mIConfig.getNode("mchat." + info) == null)
             return "";
 
-        plugin.otherMap.putAll(plugin.mIConfig.getNode("mchat." + info).getAll());
+        plugin.otherMap.putAll(plugin.mIConfig.getNode("mchat." + info)
+                .getAll());
         for (Entry<String, Object> entry : plugin.otherMap.entrySet()) {
             if (player.hasPermission("mchat." + info + "." + entry.getKey())) {
                 plugin.infoResolve = entry.getValue().toString();
@@ -276,14 +236,15 @@ public class mChatAPI {
         }
 
         return "";
-     }
+    }
 
     String getSuperPermsGroup(Player player) {
         Plugin pPlugin = plugin.pm.getPlugin("PermissionsBukkit");
-        PermissionsPlugin pBukkit = (PermissionsPlugin)pPlugin;
+        PermissionsPlugin pBukkit = (PermissionsPlugin) pPlugin;
         List<Group> pGroups = pBukkit.getGroups(player.getName());
 
-        if (pGroups.isEmpty()) return "";
+        if (pGroups.isEmpty())
+            return "";
 
         return pGroups.get(0).getName();
     }
@@ -300,7 +261,8 @@ public class mChatAPI {
         String world = player.getWorld().getName();
 
         if (plugin.permissions3) {
-            String userString = plugin.permissions.getInfoString(world, pName, info, false);
+            String userString = plugin.permissions.getInfoString(world, pName,
+                    info, false);
             String group = plugin.permissions.getPrimaryGroup(world, pName);
 
             if (userString != null && !userString.isEmpty())
@@ -309,21 +271,24 @@ public class mChatAPI {
             if (group == null)
                 return "";
 
-            String groupString = plugin.permissions.getInfoString(world, group, info, true);
+            String groupString = plugin.permissions.getInfoString(world, group,
+                    info, true);
             if (groupString == null)
                 return "";
 
             return groupString;
         } else {
             String group = plugin.permissions.getGroup(world, pName);
-            String userString = plugin.permissions.getUserPermissionString(world, pName, info);
+            String userString = plugin.permissions.getUserPermissionString(
+                    world, pName, info);
             if (userString != null && !userString.isEmpty())
                 return userString;
 
             if (group == null)
                 return "";
 
-            return plugin.permissions.getGroupPermissionString(world, group, info);
+            return plugin.permissions.getGroupPermissionString(world, group,
+                    info);
         }
     }
 
@@ -358,7 +323,8 @@ public class mChatAPI {
 
         String pName = player.getName();
         String group = plugin.gmPermissions.getGroup(pName);
-        String userString = plugin.gmPermissions.getUserPermissionString(pName, info);
+        String userString = plugin.gmPermissions.getUserPermissionString(pName,
+                info);
 
         if (userString != null && !userString.isEmpty())
             return userString;
@@ -389,7 +355,8 @@ public class mChatAPI {
         String pName = player.getName();
         String world = player.getWorld().getName();
 
-        String userString = plugin.pexPermissions.getUser(pName).getOption(info, world);
+        String userString = plugin.pexPermissions.getUser(pName).getOption(
+                info, world);
         if (userString != null && !userString.isEmpty())
             return userString;
 
@@ -400,7 +367,8 @@ public class mChatAPI {
         String pName = player.getName();
         String world = player.getWorld().getName();
 
-        String group = plugin.pexPermissions.getUser(pName).getGroupsNames(world)[0];
+        String group = plugin.pexPermissions.getUser(pName).getGroupsNames(
+                world)[0];
 
         if (group == null)
             return "";
@@ -423,7 +391,8 @@ public class mChatAPI {
     }
 
     String getbPermGroup(Player player) {
-        String group = plugin.bPermS.getPermissionSet(player.getWorld()).getGroups(player).get(0);
+        String group = plugin.bPermS.getPermissionSet(player.getWorld())
+                .getGroups(player).get(0);
 
         if (group == null)
             return "";
@@ -445,7 +414,8 @@ public class mChatAPI {
     public String basicBar(float currentValue, float maxValue, float barLength) {
         int fill = Math.round((currentValue / maxValue) * barLength);
 
-        String barColor = (fill <= (barLength/4)) ? "&4" : (fill <= (barLength/7)) ? "&e" : "&2";
+        String barColor = (fill <= (barLength / 4)) ? "&4"
+                : (fill <= (barLength / 7)) ? "&e" : "&2";
 
         StringBuilder out = new StringBuilder();
         out.append(barColor);
@@ -464,24 +434,32 @@ public class mChatAPI {
 
     public String addColour(String string) {
         string = string.replace("`e", "")
-                        .replace("`r", ChatColor.RED.toString())             .replace("`R", ChatColor.DARK_RED.toString())
-                        .replace("`y", ChatColor.YELLOW.toString())          .replace("`Y", ChatColor.GOLD.toString())
-                        .replace("`g", ChatColor.GREEN.toString())           .replace("`G", ChatColor.DARK_GREEN.toString())
-                        .replace("`a", ChatColor.AQUA.toString())            .replace("`A", ChatColor.DARK_AQUA.toString())
-                        .replace("`b", ChatColor.BLUE.toString())            .replace("`B", ChatColor.DARK_BLUE.toString())
-                        .replace("`p", ChatColor.LIGHT_PURPLE.toString())    .replace("`P", ChatColor.DARK_PURPLE.toString())
-                        .replace("`k", ChatColor.BLACK.toString())           .replace("`s", ChatColor.GRAY.toString())
-                        .replace("`S", ChatColor.DARK_GRAY.toString())       .replace("`w", ChatColor.WHITE.toString());
+                .replace("`r", ChatColor.RED.toString())
+                .replace("`R", ChatColor.DARK_RED.toString())
+                .replace("`y", ChatColor.YELLOW.toString())
+                .replace("`Y", ChatColor.GOLD.toString())
+                .replace("`g", ChatColor.GREEN.toString())
+                .replace("`G", ChatColor.DARK_GREEN.toString())
+                .replace("`a", ChatColor.AQUA.toString())
+                .replace("`A", ChatColor.DARK_AQUA.toString())
+                .replace("`b", ChatColor.BLUE.toString())
+                .replace("`B", ChatColor.DARK_BLUE.toString())
+                .replace("`p", ChatColor.LIGHT_PURPLE.toString())
+                .replace("`P", ChatColor.DARK_PURPLE.toString())
+                .replace("`k", ChatColor.BLACK.toString())
+                .replace("`s", ChatColor.GRAY.toString())
+                .replace("`S", ChatColor.DARK_GRAY.toString())
+                .replace("`w", ChatColor.WHITE.toString());
 
-        string = string.replace("<r>", "")
-                        .replace("<black>", "\u00A70")                       .replace("<navy>", "\u00A71")
-                        .replace("<green>", "\u00A72")                       .replace("<teal>", "\u00A73")
-                        .replace("<red>", "\u00A74")                         .replace("<purple>", "\u00A75")
-                        .replace("<gold>", "\u00A76")                        .replace("<silver>", "\u00A77")
-                        .replace("<gray>", "\u00A78")                        .replace("<blue>", "\u00A79")
-                        .replace("<lime>", "\u00A7a")                        .replace("<aqua>", "\u00A7b")
-                        .replace("<rose>", "\u00A7c")                        .replace("<pink>", "\u00A7d")
-                        .replace("<yellow>", "\u00A7e")                      .replace("<white>", "\u00A7f");
+        string = string.replace("<r>", "").replace("<black>", "\u00A70")
+                .replace("<navy>", "\u00A71").replace("<green>", "\u00A72")
+                .replace("<teal>", "\u00A73").replace("<red>", "\u00A74")
+                .replace("<purple>", "\u00A75").replace("<gold>", "\u00A76")
+                .replace("<silver>", "\u00A77").replace("<gray>", "\u00A78")
+                .replace("<blue>", "\u00A79").replace("<lime>", "\u00A7a")
+                .replace("<aqua>", "\u00A7b").replace("<rose>", "\u00A7c")
+                .replace("<pink>", "\u00A7d").replace("<yellow>", "\u00A7e")
+                .replace("<white>", "\u00A7f");
 
         string = string.replaceAll("(§([a-z0-9]))", "\u00A7$2");
 
@@ -573,10 +551,27 @@ public class mChatAPI {
     }
 
     String replaceCensoredWords(String msg) {
-        for (Entry<String, Object> entry : plugin.censorMap.entrySet()) {
-            if (msg.matches("(?i)" + entry.getKey())) {
-                msg = msg.replaceAll("(?i)" + entry.getKey(), addColour(entry.getValue().toString()));
+        for (Entry<Pattern, String> entry : plugin.censorMap.entrySet()) {
+            final Pattern pattern = entry.getKey();
+            final Matcher matcher = pattern.matcher(msg);
+            final StringBuffer result = new StringBuffer(msg.length() + 16);
+
+            while (matcher.find()) {
+                int i = matcher.start();
+                char color = 'f';
+                while (i >= 0) {
+                    if (msg.charAt(i) == '§') {
+                        color = msg.charAt(i + 1);
+                        break;
+                    }
+                    i--;
+                }
+
+                matcher.appendReplacement(result, "§c"
+                        + addColour(entry.getValue().toString()) + '§' + color);
             }
+            matcher.appendTail(result);
+            msg = result.toString();
         }
 
         return msg;
@@ -585,7 +580,6 @@ public class mChatAPI {
     public void log(String loggedString) {
         plugin.getServer().getLogger().log(Level.INFO, loggedString);
     }
-
 
     protected void refreshMaps() {
         plugin.otherMap.clear();

@@ -1,6 +1,8 @@
 package net.D3GN.MiracleM4n.mChat;
 
-import org.bukkit.plugin.PluginDescriptionFile;
+import java.util.Map;
+import java.util.regex.Pattern;
+
 import org.bukkit.util.config.Configuration;
 
 public class MCConfigListener {
@@ -15,16 +17,17 @@ public class MCConfigListener {
         Configuration config = plugin.mCConfig;
         config.load();
 
-        plugin.censorMap.putAll(config.getAll());
+        for (Map.Entry<String, Object> entry : config.getAll().entrySet()) {
+            plugin.censorMap.put(Pattern.compile(
+                    "\\b" + Pattern.quote(entry.getKey()) + "\\b",
+                    Pattern.CASE_INSENSITIVE), entry.getValue().toString());
+        }
     }
 
     protected void defaultConfig() {
         Configuration config = plugin.mCConfig;
         config.save();
-        config.setHeader(
-            "# mChat Censor file",
-            ""
-        );
+        config.setHeader("# mChat Censor file", "");
 
         config.setProperty("fuck", "fawg");
         config.setProperty("god", "MiracleM4n");
